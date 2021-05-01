@@ -1,7 +1,7 @@
 import './App.css';
 import styled from 'styled-components';
 import { useState } from 'react';
-import CloudData from './Data/students.json';
+import CloudData from './students.json';
 import ProgressBar from './Components/progressBar';
 
 function findPercentage(nQ, nS) {
