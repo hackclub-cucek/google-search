@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import CloudData from './Data/students.json';
 import ProgressBar from './Components/progressBar';
+import Header from './Components/Header';
+
 
 function findPercentage(nQ, nS) {
   var m0 = 0,
@@ -70,7 +72,7 @@ function App() {
 
   return (
     <DivContainer className="App">
-      <h1>Hello world 🚀 </h1>
+      <Header />
       <SearchSection>
         <SearchForm>
           <SearchInput
@@ -86,7 +88,7 @@ function App() {
         CloudData.filter(CloudDetail => {
           if (searchTerm == CloudDetail.Student_Email) {
             return CloudDetail
-          }
+          } 
         }).map((CloudDetail, index) => {
           finished = findPercentage(
             CloudDetail.Quests_Completed,
@@ -102,7 +104,11 @@ function App() {
               }}
               className="Card"
             >
-              <CardDiv index={index}>
+              <CardDiv index={index}
+              style={{
+                backgroundColor: '#8E54E9'
+              }}
+              >
                 <div className="user-info">
                   <CardH2>
                     <a
@@ -193,9 +199,6 @@ export const CardH5 = styled.h5`
 `;
 
 export const CardDiv = styled.div`
-  background-color: black;
-  
-
   display: flex;
   max-width: 500px;
   border-radius: 15px;
