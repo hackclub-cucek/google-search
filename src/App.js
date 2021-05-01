@@ -113,7 +113,6 @@ function App() {
                       <b>{CloudDetail.Student_Name}</b>
                     </a>
                   </CardH2>
-                  <CardH5>Rank : {CloudDetail.Rank}</CardH5>
                   <Cardul>
                     <Cardli>
                       {CloudDetail.Quests_Completed}
