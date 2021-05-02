@@ -1,74 +1,73 @@
-import './App.css';
-import styled from 'styled-components';
-import { useState } from 'react';
-import CloudData from './Data/students.json';
-import ProgressBar from './Components/progressBar';
-import Header from './Components/Header';
-
+import "./App.css";
+import styled from "styled-components";
+import { useState } from "react";
+import CloudData from "./Data/students.json";
+import ProgressBar from "./Components/progressBar";
+import Header from "./Components/Header";
 
 function findPercentage(nQ, nS) {
   var m0 = 0,
     m1 = 0,
     m2 = 0,
-    m3 = 0
+    m3 = 0;
   if (nQ <= 8) {
-    m0 = nQ
+    m0 = nQ;
   } else if (nQ > 8 && nQ <= 16) {
-    m0 = 8
-    m1 = nQ - 8
+    m0 = 8;
+    m1 = nQ - 8;
   } else if (nQ > 16 && nQ <= 24) {
-    m0 = 8
-    m1 = 8
-    m2 = nQ - 16
+    m0 = 8;
+    m1 = 8;
+    m2 = nQ - 16;
   } else {
-    m0 = 8
-    m1 = 8
-    m2 = 8
-    m3 = nQ - 24
+    m0 = 8;
+    m1 = 8;
+    m2 = 8;
+    m3 = nQ - 24;
   }
 
   var n0 = 0,
     n1 = 0,
     n2 = 0,
-    n3 = 0
+    n3 = 0;
 
   if (nS <= 4) {
-    n0 = nS
+    n0 = nS;
   } else if (nS > 4 && nS <= 8) {
-    n0 = 4
-    n1 = nS - 4
+    n0 = 4;
+    n1 = nS - 4;
   } else if (nS > 8 && nS <= 12) {
-    n0 = 4
-    n1 = 4
-    n2 = nS - 8
+    n0 = 4;
+    n1 = 4;
+    n2 = nS - 8;
   } else {
-    n0 = 4
-    n1 = 4
-    n2 = 4
-    n3 = nS - 12
+    n0 = 4;
+    n1 = 4;
+    n2 = 4;
+    n3 = nS - 12;
   }
-  var mile_1 = m0 * 6.25
-  var mile_2 = m1 * 6.25
-  var mile_3 = m2 * 6.25
-  var mile_4 = m3 * 8.33
+  var mile_1 = m0 * 6.25;
+  var mile_2 = m1 * 6.25;
+  var mile_3 = m2 * 6.25;
+  var mile_4 = m3 * 8.33;
 
-  var finalMile_1 = Math.round(mile_1 + n0 * 12.5)
-  var finalMile_2 = Math.round(mile_2 + n1 * 12.5)
-  var finalMile_3 = Math.round(mile_3 + n2 * 12.5)
-  var finalMile_4 = Math.round(mile_4 + n3 * 16.7)
+  var finalMile_1 = Math.round(mile_1 + n0 * 12.5);
+  var finalMile_2 = Math.round(mile_2 + n1 * 12.5);
+  var finalMile_3 = Math.round(mile_3 + n2 * 12.5);
+  var finalMile_4 = Math.round(mile_4 + n3 * 16.7);
 
-  var results = []
-  results.push(finalMile_1)
-  results.push(finalMile_2)
-  results.push(finalMile_3)
-  results.push(finalMile_4)
-  return results
+  var results = [];
+  results.push(finalMile_1);
+  results.push(finalMile_2);
+  results.push(finalMile_3);
+  results.push(finalMile_4);
+  return results;
 }
 
-var finished = []
+var finished = [];
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <DivContainer className="App">
@@ -78,75 +77,79 @@ function App() {
           <SearchInput
             type="text"
             placeholder="Search with Email"
-            onChange={event => {
-              setSearchTerm(event.target.value)
+            onChange={(event) => {
+              setSearchTerm(event.target.value);
             }}
           />
         </SearchForm>
       </SearchSection>
-      {
-        CloudData.filter(CloudDetail => {
-          if (searchTerm == CloudDetail.Student_Email) {
-            return CloudDetail
-          } 
-        }).map((CloudDetail, index) => {
-          finished = findPercentage(
-            CloudDetail.Quests_Completed,
-            CloudDetail.Skill_Badges_Completed
-          )
-          return (
-            <CardContainer
+      {CloudData.filter((CloudDetail) => {
+        if (searchTerm == CloudDetail.Student_Email) {
+          return CloudDetail;
+        }
+      }).map((CloudDetail, index) => {
+        finished = findPercentage(
+          CloudDetail.Quests_Completed,
+          CloudDetail.Skill_Badges_Completed
+        );
+        return (
+          <CardContainer
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: 10,
+            }}
+            className="Card"
+          >
+            <CardDiv
+              index={index}
               style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                boxShadow: 10,
+                backgroundColor: "#8E54E9",
               }}
-              className="Card"
             >
-              <CardDiv index={index}
-              style={{
-                backgroundColor: '#8E54E9'
-              }}
-              >
-                <div className="user-info">
-                  <CardH2>
-                    <a
-                      href={`${CloudDetail.Qwiklabs_Profile_URL}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <b>{CloudDetail.Student_Name}</b>
-                    </a>
-                  </CardH2>
-                  <Cardul>
-                    <Cardli>
-                      {CloudDetail.Quests_Completed}
-                      <Cardstrong>Quests Completed</Cardstrong>
-                    </Cardli>
-                    <Cardli>
-                      {CloudDetail.Skill_Badges_Completed}
-                      <Cardstrong>Skill Badges Completed</Cardstrong>
-                    </Cardli>
-                  </Cardul>
-                  <CardH5>Milestone #1- Complete any 8 quests & 4 skill badges</CardH5>
-                  <ProgressBar completed={finished[0]} bigcolor="#4285f4" />
-                  <CardH5>Milestone #2- Complete any 16 quests & 8 skill badges</CardH5>
-                  <ProgressBar completed={finished[1]} bigcolor="#fbbc05" />
-                  <CardH5>Milestone #3- Complete any 24 quests & 12 skill badges</CardH5>
-                  <ProgressBar completed={finished[2]} bigcolor="#34a853" />
-                  <CardH5>Milestone #4- Complete any 30 quests & 15 skill badges</CardH5>
-                  <ProgressBar completed={finished[3]} bigcolor="#ea4335" />
-                </div>
-              </CardDiv>
-            </CardContainer>
-          )
-        })
-      }
-
+              <div className="user-info">
+                <CardH2>
+                  <a
+                    href={`${CloudDetail.Qwiklabs_Profile_URL}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <b>{CloudDetail.Student_Name}</b>
+                  </a>
+                </CardH2>
+                <Cardul>
+                  <Cardli>
+                    {CloudDetail.Quests_Completed}
+                    <Cardstrong>Quests Completed</Cardstrong>
+                  </Cardli>
+                  <Cardli>
+                    {CloudDetail.Skill_Badges_Completed}
+                    <Cardstrong>Skill Badges Completed</Cardstrong>
+                  </Cardli>
+                </Cardul>
+                <CardH5>
+                  Milestone #1- Complete any 8 quests & 4 skill badges
+                </CardH5>
+                <ProgressBar completed={finished[0]} bigcolor="#4285f4" />
+                <CardH5>
+                  Milestone #2- Complete any 16 quests & 8 skill badges
+                </CardH5>
+                <ProgressBar completed={finished[1]} bigcolor="#fbbc05" />
+                <CardH5>
+                  Milestone #3- Complete any 24 quests & 12 skill badges
+                </CardH5>
+                <ProgressBar completed={finished[2]} bigcolor="#34a853" />
+                <CardH5>
+                  Milestone #4- Complete any 30 quests & 15 skill badges
+                </CardH5>
+                <ProgressBar completed={finished[3]} bigcolor="#ea4335" />
+              </div>
+            </CardDiv>
+          </CardContainer>
+        );
+      })}
     </DivContainer>
-
-
   );
 }
 
@@ -156,14 +159,11 @@ const DivContainer = styled.div`
   padding: 0 20px;
 `;
 
-
 const SearchSection = styled.section`
-    height: 100px;
+  height: 100px;
 `;
 
-const SearchForm = styled.form`
-
-`;
+const SearchForm = styled.form``;
 
 const SearchInput = styled.input`
   display: block;
@@ -186,9 +186,8 @@ export const CardContainer = styled.div`
   margin: 0;
 `;
 
-
 export const CardH1 = styled.h1`
-    color: #fff;
+  color: #fff;
 `;
 
 export const CardH5 = styled.h5`
@@ -255,6 +254,5 @@ export const Cardstrong = styled.strong`
   margin-left: 2rem;
   margin-right: 1rem;
 `;
-
 
 export default App;
